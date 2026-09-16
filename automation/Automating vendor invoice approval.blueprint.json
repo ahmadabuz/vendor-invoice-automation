@@ -1076,31 +1076,39 @@
                                 "to": [
                                     "x@y.com"
                                 ],
-                                "content": "Hello,<br><br>\r\nA new vendor invoice has passed validation and is ready for processing (Reference: {{9.responseId}}).<br><br>\r\nVendor: {{9.answers.`5788383f`.textAnswers.answers[].value}}<br>\r\nInvoice amount: {{9.answers.`58d0cf0c`.textAnswers.answers[].value}}<br>\r\nPO number: {{9.answers.`168c6106`.textAnswers.answers[].value}}<br>\r\nClient/cost center code: {{9.answers.`5e0bd114`.textAnswers.answers[].value}}<br><br>\r\nThis invoice is within the standard approval threshold and does not require Finance Director approval.<br><br>\r\nPlease process this payment.<br><br>\r\nThank you,<br>\r\nFinance Automation",
-                                "subject": "New day, new application ",
-                                "bodyType": "rawHtml"
+                                "subject": "Invoice approved for payment",
+                                "bodyType": "rawHtml",
+                                "content": "Hello,<br><br>\r\nA new vendor invoice has passed validation and is ready for processing (Reference: {{9.responseId}}).<br><br>\r\nVendor: {{9.answers.`5788383f`.textAnswers.answers[].value}}<br>\r\nInvoice amount: {{9.answers.`58d0cf0c`.textAnswers.answers[].value}}<br>\r\nPO number: {{9.answers.`168c6106`.textAnswers.answers[].value}}<br>\r\nClient/cost center code: {{9.answers.`5e0bd114`.textAnswers.answers[].value}}<br><br>\r\nThis invoice is within the standard approval threshold and does not require Finance Director approval.<br><br>\r\nPlease process this payment.<br><br>\r\nThank you,<br>\r\nFinance Automation"
                             },
                             "metadata": {
                                 "designer": {
                                     "x": 1038,
                                     "y": 11
                                 },
+                                "setupValidation": {
+                                    "version": 1,
+                                    "configuration": "cc1dea8166dd9c0a",
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    }
+                                },
                                 "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "user's Gmail connection (x@y.com)",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google-email"
+                                            }
+                                        }
+                                    },
                                     "expect": {
-                                        "cc": {
-                                            "mode": "chose"
-                                        },
                                         "to": {
                                             "mode": "chose",
                                             "items": [
                                                 null
                                             ]
-                                        },
-                                        "bcc": {
-                                            "mode": "chose"
-                                        },
-                                        "from": {
-                                            "mode": "chose"
                                         },
                                         "bodyType": {
                                             "label": "Raw HTML"
@@ -1108,17 +1116,17 @@
                                         "attachments": {
                                             "mode": "chose"
                                         },
+                                        "from": {
+                                            "mode": "chose"
+                                        },
+                                        "cc": {
+                                            "mode": "chose"
+                                        },
+                                        "bcc": {
+                                            "mode": "chose"
+                                        },
                                         "emailHeaders": {
                                             "mode": "chose"
-                                        }
-                                    },
-                                    "parameters": {
-                                        "__IMTCONN__": {
-                                            "data": {
-                                                "scoped": "true",
-                                                "connection": "google-email"
-                                            },
-                                            "label": "user's Gmail connection (x@y.com)"
                                         }
                                     }
                                 },
@@ -1133,16 +1141,16 @@
                                 "expect": [
                                     {
                                         "name": "to",
+                                        "type": "array",
+                                        "label": "To",
+                                        "required": true,
                                         "spec": {
-                                            "name": "value",
                                             "type": "email",
                                             "label": "Recipient email address",
                                             "required": true,
-                                            "validate": true
-                                        },
-                                        "type": "array",
-                                        "label": "To",
-                                        "required": true
+                                            "validate": true,
+                                            "name": "value"
+                                        }
                                     },
                                     {
                                         "name": "subject",
@@ -1163,8 +1171,9 @@
                                     },
                                     {
                                         "name": "attachments",
+                                        "type": "array",
+                                        "label": "Attachments",
                                         "spec": {
-                                            "name": "value",
                                             "spec": [
                                                 {
                                                     "name": "filename",
@@ -1182,10 +1191,9 @@
                                                 }
                                             ],
                                             "type": "collection",
-                                            "label": "Attachment"
-                                        },
-                                        "type": "array",
-                                        "label": "Attachments"
+                                            "label": "Attachment",
+                                            "name": "value"
+                                        }
                                     },
                                     {
                                         "name": "from",
@@ -1194,28 +1202,29 @@
                                     },
                                     {
                                         "name": "cc",
-                                        "spec": {
-                                            "name": "value",
-                                            "type": "email",
-                                            "label": "Recipient email address"
-                                        },
                                         "type": "array",
-                                        "label": "CC recipients"
+                                        "label": "CC recipients",
+                                        "spec": {
+                                            "type": "email",
+                                            "label": "Recipient email address",
+                                            "name": "value"
+                                        }
                                     },
                                     {
                                         "name": "bcc",
-                                        "spec": {
-                                            "name": "value",
-                                            "type": "email",
-                                            "label": "Recipient email address"
-                                        },
                                         "type": "array",
-                                        "label": "BCC recipients"
+                                        "label": "BCC recipients",
+                                        "spec": {
+                                            "type": "email",
+                                            "label": "Recipient email address",
+                                            "name": "value"
+                                        }
                                     },
                                     {
                                         "name": "emailHeaders",
+                                        "type": "array",
+                                        "label": "Additional email headers",
                                         "spec": {
-                                            "name": "value",
                                             "spec": [
                                                 {
                                                     "name": "key",
@@ -1230,10 +1239,9 @@
                                                 }
                                             ],
                                             "type": "collection",
-                                            "label": "Email header"
-                                        },
-                                        "type": "array",
-                                        "label": "Additional email headers"
+                                            "label": "Email header",
+                                            "name": "value"
+                                        }
                                     },
                                     {
                                         "name": "content",
